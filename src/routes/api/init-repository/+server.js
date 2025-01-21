@@ -35,8 +35,8 @@ async function setupRepository(octokit, user, repoName, mapConfig) {
 	// Create new repository
 	await retryOperation(async () => {
 		await octokit.repos.createUsingTemplate({
-			template_owner: 'alsino',
-			template_repo: 'map-creation-interface',
+			template_owner: 'EuranetPlus',
+			template_repo: 'map-tool',
 			owner: user.login,
 			name: repoName,
 			private: false,
