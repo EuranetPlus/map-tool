@@ -1,0 +1,13 @@
+{
+	"headers": [
+		{
+			"source": "/(.*)",
+			"headers": [
+				{
+					"key": "WWW-Authenticate",
+					"value": "Basic realm=\"Secure Area\""
+				}
+			]
+		}
+	]
+}
