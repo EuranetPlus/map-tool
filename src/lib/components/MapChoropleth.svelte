@@ -465,11 +465,16 @@
 			<Legend color={mapConfig.legend1Color} label={mapConfig.legend1} />
 		{/if}
 
+		<!-- <svg
+			preserveAspectRatio="xMidYMid meet"
+			viewBox="0 0 {width} {height}"
+			style="max-height: calc(100vh - var(--text-height, 0px) - 2rem)"
+		> -->
 		<svg
 			preserveAspectRatio="xMidYMid meet"
 			viewBox="0 0 {width} {height}"
 			style="
-        height: min(calc(100vh - var(--text-height)), 100%);
+        max-height: calc(100vh - var(--text-height));
         width: 100%;
     "
 		>
