@@ -59,14 +59,6 @@
 			parentMargin = parseInt(parentStyles.marginTop) || 0;
 		}
 
-		console.log('Element measurements:', {
-			element: element.id || element.className,
-			elementHeight,
-			ownMarginTop: marginTop,
-			ownMarginBottom: marginBottom,
-			parentMargin
-		});
-
 		return elementHeight + marginTop + marginBottom + parentMargin;
 	}
 
@@ -76,13 +68,6 @@
 		const sourceNotesTotal = getTotalHeight(sourceNotesRef);
 
 		totalTextHeight = headerTotal + chartHeaderTotal + sourceNotesTotal;
-
-		console.log('Final measurements:', {
-			headerTotal,
-			chartHeaderTotal,
-			sourceNotesTotal,
-			totalTextHeight
-		});
 	}
 
 	// Add this function to detect if we're in a deployed sub-app
