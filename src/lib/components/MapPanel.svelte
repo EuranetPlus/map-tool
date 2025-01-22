@@ -37,6 +37,11 @@
 
 	let transformedGeoData;
 
+	// Add these variables to your existing script
+	let headerHeight = 0;
+	let titleHeight = 0;
+	let sourceHeight = 0;
+
 	// Add this function to detect if we're in a deployed sub-app
 	function isDeployedMap() {
 		// Check if we're in a deployed map by looking for specific URL parameters
@@ -271,7 +276,7 @@
 		bind:clientHeight={$APP_HEIGHT}
 		bind:clientWidth={innerWidth}
 	>
-		<header>
+		<header bind:clientHeight={headerHeight}>
 			<div class="logo">
 				<img
 					src="./img/logo.png"
@@ -291,7 +296,7 @@
 		</header>
 
 		<div id="chart" class="mt-8">
-			<div id="chart-header">
+			<div id="chart-header" bind:clientHeight={titleHeight}>
 				{#if $mapConfig.title}
 					<h1 class="text-xl font-bold">{$mapConfig.title}</h1>
 				{/if}
@@ -302,7 +307,7 @@
 
 			<div id="chart-body" class="mt-4">
 				{#if tooltip}
-					<div class="wrapper">
+					<div class="wrapper" style="--text-height: {headerHeight + titleHeight + sourceHeight}px">
 						<MapChoropleth
 							mapConfig={$mapConfig}
 							{tooltip}
@@ -314,7 +319,7 @@
 				{/if}
 			</div>
 
-			<div id="source-notes" class="mt-2 text-xs">
+			<div id="source-notes" class="mt-2 text-xs" bind:clientHeight={sourceHeight}>
 				{#if $mapConfig.textSource}
 					<div>
 						<span class="font-bold">{$mapConfig.textSourceDescription}: </span>
