@@ -474,7 +474,7 @@
 			preserveAspectRatio="xMidYMid meet"
 			viewBox="0 0 {width} {height}"
 			style="
-        max-height: calc(100vh - var(--text-height));
+        max-height: calc(100vh - var(--text-height) - 2rem);
         width: 100%;
     "
 		>

@@ -45,60 +45,43 @@
 	// Function to get element's total height including margins
 	function getTotalHeight(element) {
 		if (!element) return 0;
+
+		// Get computed styles for the element
 		const styles = window.getComputedStyle(element);
-		const marginTop = parseInt(styles.marginTop);
-		const marginBottom = parseInt(styles.marginBottom);
-		return element.offsetHeight + marginTop + marginBottom;
+		const marginTop = parseInt(styles.marginTop) || 0;
+		const marginBottom = parseInt(styles.marginBottom) || 0;
+		const elementHeight = element.offsetHeight;
+
+		// Get the element's parent's margin if it exists and is within our map container
+		let parentMargin = 0;
+		if (element.parentElement && !element.parentElement.matches('#euranet-map')) {
+			const parentStyles = window.getComputedStyle(element.parentElement);
+			parentMargin = parseInt(parentStyles.marginTop) || 0;
+		}
+
+		console.log('Element measurements:', {
+			element: element.id || element.className,
+			elementHeight,
+			ownMarginTop: marginTop,
+			ownMarginBottom: marginBottom,
+			parentMargin
+		});
+
+		return elementHeight + marginTop + marginBottom + parentMargin;
 	}
 
 	$: if (headerRef && chartHeaderRef && sourceNotesRef) {
-		totalTextHeight =
-			getTotalHeight(headerRef) +
-			getTotalHeight(chartHeaderRef) +
-			getTotalHeight(sourceNotesRef) +
-			20; // Small safety buffer
-	}
-
-	$: if (headerRef && chartHeaderRef && sourceNotesRef) {
-		// Get container elements
-		const chartContainer = chartHeaderRef.closest('#chart');
-		const chartBody = sourceNotesRef.closest('#chart-body');
-
 		const headerTotal = getTotalHeight(headerRef);
 		const chartHeaderTotal = getTotalHeight(chartHeaderRef);
 		const sourceNotesTotal = getTotalHeight(sourceNotesRef);
 
-		// Add container margins
-		const chartMargin = parseInt(window.getComputedStyle(chartContainer).marginTop);
-		const chartBodyMargin = parseInt(window.getComputedStyle(chartBody).marginTop);
+		totalTextHeight = headerTotal + chartHeaderTotal + sourceNotesTotal;
 
-		totalTextHeight =
-			headerTotal + chartHeaderTotal + sourceNotesTotal + chartMargin + chartBodyMargin;
-
-		console.log('Height breakdown:', {
-			header: {
-				height: headerRef.offsetHeight,
-				marginTop: parseInt(window.getComputedStyle(headerRef).marginTop),
-				marginBottom: parseInt(window.getComputedStyle(headerRef).marginBottom),
-				total: headerTotal
-			},
-			chartHeader: {
-				height: chartHeaderRef.offsetHeight,
-				marginTop: parseInt(window.getComputedStyle(chartHeaderRef).marginTop),
-				marginBottom: parseInt(window.getComputedStyle(chartHeaderRef).marginBottom),
-				total: chartHeaderTotal
-			},
-			sourceNotes: {
-				height: sourceNotesRef.offsetHeight,
-				marginTop: parseInt(window.getComputedStyle(sourceNotesRef).marginTop),
-				marginBottom: parseInt(window.getComputedStyle(sourceNotesRef).marginBottom),
-				total: sourceNotesTotal
-			},
-			containers: {
-				chartMargin,
-				chartBodyMargin
-			},
-			totalHeight: totalTextHeight
+		console.log('Final measurements:', {
+			headerTotal,
+			chartHeaderTotal,
+			sourceNotesTotal,
+			totalTextHeight
 		});
 	}
 
