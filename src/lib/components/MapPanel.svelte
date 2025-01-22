@@ -360,13 +360,6 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="fixed bottom-0 right-0 z-50 bg-white p-2 text-xs">
-		Header: {headerHeight}px<br />
-		Title: {titleHeight}px<br />
-		Source: {sourceHeight}px<br />
-		Total: {headerHeight + titleHeight + sourceHeight}px
-	</div>
 </div>
 
 <style>
