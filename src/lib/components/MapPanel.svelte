@@ -60,9 +60,20 @@
 	}
 
 	$: if (headerRef && chartHeaderRef && sourceNotesRef) {
+		// Get container elements
+		const chartContainer = chartHeaderRef.closest('#chart');
+		const chartBody = sourceNotesRef.closest('#chart-body');
+
 		const headerTotal = getTotalHeight(headerRef);
 		const chartHeaderTotal = getTotalHeight(chartHeaderRef);
 		const sourceNotesTotal = getTotalHeight(sourceNotesRef);
+
+		// Add container margins
+		const chartMargin = parseInt(window.getComputedStyle(chartContainer).marginTop);
+		const chartBodyMargin = parseInt(window.getComputedStyle(chartBody).marginTop);
+
+		totalTextHeight =
+			headerTotal + chartHeaderTotal + sourceNotesTotal + chartMargin + chartBodyMargin;
 
 		console.log('Height breakdown:', {
 			header: {
@@ -83,10 +94,12 @@
 				marginBottom: parseInt(window.getComputedStyle(sourceNotesRef).marginBottom),
 				total: sourceNotesTotal
 			},
-			totalHeight: headerTotal + chartHeaderTotal + sourceNotesTotal
+			containers: {
+				chartMargin,
+				chartBodyMargin
+			},
+			totalHeight: totalTextHeight
 		});
-
-		totalTextHeight = headerTotal + chartHeaderTotal + sourceNotesTotal;
 	}
 
 	// Add this function to detect if we're in a deployed sub-app
