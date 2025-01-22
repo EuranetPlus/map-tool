@@ -475,6 +475,7 @@
 			viewBox="0 0 {width} {height}"
 			style="
         max-height: calc(100vh - var(--text-height));
+				height: calc((100vw - 48px) * 0.8);  /* Adjust 0.8 to get the desired aspect ratio */
         width: 100%;
     "
 		>
