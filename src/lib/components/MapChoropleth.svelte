@@ -465,7 +465,7 @@
 			<Legend color={mapConfig.legend1Color} label={mapConfig.legend1} />
 		{/if}
 
-		<svg preserveAspectRatio="xMinYMid meet" viewBox="0 0 {width} {height}" class="">
+		<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 {width} {height}" class="h-auto w-full">
 			<!-- graticules (lines) -->
 			{#if graticules?.features}
 				{#each graticules.features as feature}
@@ -552,12 +552,22 @@
 <style>
 	#map {
 		position: relative;
+		max-height: 66vh; /* This ensures the map takes up at most 2/3 of the viewport height */
 	}
 
 	svg {
 		width: 100%;
 		height: auto;
 	}
+
+	/* #map {
+		position: relative;
+	}
+
+	svg {
+		width: 100%;
+		height: auto;
+	} */
 
 	svg path {
 		stroke-width: 0.5px;
