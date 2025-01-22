@@ -37,10 +37,28 @@
 
 	let transformedGeoData;
 
-	// Add these variables to your existing script
-	let headerHeight = 0;
-	let titleHeight = 0;
-	let sourceHeight = 0;
+	let headerRef;
+	let chartHeaderRef;
+	let sourceNotesRef;
+	let totalTextHeight = 0;
+
+	// Function to get element's total height including margins
+	function getTotalHeight(element) {
+		if (!element) return 0;
+		const styles = window.getComputedStyle(element);
+		const marginTop = parseInt(styles.marginTop);
+		const marginBottom = parseInt(styles.marginBottom);
+		return element.offsetHeight + marginTop + marginBottom;
+	}
+
+	// Reactive statement to calculate total height whenever any component changes
+	$: if (headerRef && chartHeaderRef && sourceNotesRef) {
+		totalTextHeight =
+			getTotalHeight(headerRef) +
+			getTotalHeight(chartHeaderRef) +
+			getTotalHeight(sourceNotesRef) +
+			20; // Small safety buffer
+	}
 
 	// Add this function to detect if we're in a deployed sub-app
 	function isDeployedMap() {
@@ -276,7 +294,7 @@
 		bind:clientHeight={$APP_HEIGHT}
 		bind:clientWidth={innerWidth}
 	>
-		<header bind:clientHeight={headerHeight}>
+		<header bind:this={headerRef}>
 			<div class="logo">
 				<img
 					src="./img/logo.png"
@@ -296,7 +314,7 @@
 		</header>
 
 		<div id="chart" class="mt-8">
-			<div id="chart-header" bind:clientHeight={titleHeight}>
+			<div id="chart-header" bind:this={chartHeaderRef}>
 				{#if $mapConfig.title}
 					<h1 class="text-xl font-bold">{$mapConfig.title}</h1>
 				{/if}
@@ -307,7 +325,7 @@
 
 			<div id="chart-body" class="mt-4">
 				{#if tooltip}
-					<div class="wrapper" style="--text-height: {headerHeight + titleHeight + sourceHeight}px">
+					<div class="wrapper" style="--text-height: {totalTextHeight}px">
 						<MapChoropleth
 							mapConfig={$mapConfig}
 							{tooltip}
@@ -319,7 +337,7 @@
 				{/if}
 			</div>
 
-			<div id="source-notes" class="mt-2 text-xs" bind:clientHeight={sourceHeight}>
+			<div id="source-notes" class="mt-2 text-xs" bind:this={sourceNotesRef}>
 				{#if $mapConfig.textSource}
 					<div>
 						<span class="font-bold">{$mapConfig.textSourceDescription}: </span>
