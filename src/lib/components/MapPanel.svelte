@@ -264,10 +264,7 @@
 	}
 </script>
 
-<div
-	class={isFullscreen ? 'relative w-full overflow-hidden' : 'relative w-1/2 overflow-hidden'}
-	style="height: 100%;"
->
+<div class={isFullscreen ? 'relative w-full' : 'relative w-1/2'} style="height: 100%;">
 	<div
 		id="euranet-map"
 		class="relative {isFullscreen ? 'p-0' : 'p-32 pt-12'}"
