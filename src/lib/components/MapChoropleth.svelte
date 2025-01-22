@@ -468,7 +468,11 @@
 		<svg
 			preserveAspectRatio="xMidYMid meet"
 			viewBox="0 0 {width} {height}"
-			style="max-height: calc(100vh - var(--text-height, 0px) - 2rem)"
+			style="
+        max-height: calc(100vh - var(--text-height, 0px));
+        aspect-ratio: 1/1;
+        width: min(100%, calc(100vh - var(--text-height)));
+    "
 		>
 			<!-- graticules (lines) -->
 			{#if graticules?.features}
@@ -562,15 +566,6 @@
 		width: 100%;
 		height: auto;
 	}
-
-	/* #map {
-		position: relative;
-	}
-
-	svg {
-		width: 100%;
-		height: auto;
-	} */
 
 	svg path {
 		stroke-width: 0.5px;
