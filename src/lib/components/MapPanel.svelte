@@ -244,87 +244,6 @@
 		}
 	}
 
-	// async function getLanguage(lang) {
-	// 	try {
-	// 		shouldUpdateMap.set(false);
-
-	// 		let data;
-	// 		const isSubApp = window.location.search.includes('view=fullscreen');
-	// 		console.log('Is sub app:', isSubApp); // Add this log to verify
-
-	// 		if (isSubApp) {
-	// 			// In deployed sub-app, load from static files
-	// 			data = await loadTranslationFile(lang);
-	// 			if (!data) {
-	// 				console.warn('No translation file found for language:', lang);
-	// 				return;
-	// 			}
-	// 		} else {
-	// 			// In main app, use the store
-	// 			data = $translations[lang];
-	// 			console.log($translations);
-	// 			if (!data) {
-	// 				console.warn('No translation data found for language:', lang);
-	// 				return;
-	// 			}
-	// 		}
-
-	// 		// Create the new config object
-	// 		const newConfig = {
-	// 			...$mapConfig,
-	// 			title: data.title || '',
-	// 			subtitle: data.subtitle || '',
-	// 			textSourceDescription: data.textSourceDescription || '',
-	// 			textSource: data.textSource || '',
-	// 			textNoteDescription: data.textNoteDescription || '',
-	// 			textNote: data.textNote || '',
-	// 			linkDataAccessDescription: data.linkDataAccessDescription || '',
-	// 			legend1: data.legend1 || '',
-	// 			customUnitLabel: data.customUnitLabel || '',
-	// 			tooltipExtraInfoLabel: data.tooltipExtraInfoLabel || '',
-	// 			translate: {
-	// 				title: data.title || '',
-	// 				subtitle: data.subtitle || '',
-	// 				textNoteDescription: data.textNoteDescription || '',
-	// 				textNote: data.textNote || '',
-	// 				textSourceDescription: data.textSourceDescription || '',
-	// 				textSource: data.textSource || '',
-	// 				linkDataAccessDescription: data.linkDataAccessDescription || '',
-	// 				legend1: data.legend1 || '',
-	// 				tooltipExtraInfoLabel: data.tooltipExtraInfoLabel || ''
-	// 			}
-	// 		};
-
-	// 		// Extract and add extraInfo entries
-	// 		const extraInfoEntries = Object.keys(data).filter((key) => key.startsWith('extraInfo_'));
-	// 		extraInfoEntries.forEach((key) => {
-	// 			newConfig[key] = data[key] || '';
-	// 			newConfig.translate[key] = data[key] || '';
-	// 		});
-
-	// 		// Update the store
-	// 		mapConfig.set(newConfig);
-
-	// 		// Update tooltips
-	// 		tooltipEntries = Object.keys(data).filter((item) => item.includes('tooltip'));
-	// 		tooltip = tooltipEntries.map((item) => ({
-	// 			[item]: data[item],
-	// 			label: data[item],
-	// 			textCountryClick: data.textCountryClick || ''
-	// 		}));
-
-	// 		// Extra Info
-	// 		extraInfoTexts = filterAndReduceExtraInfo(data, 'extraInfoText');
-	// 		extraInfoLinks = filterAndReduceExtraInfo(data, 'extraInfoLink');
-	// 	} catch (error) {
-	// 		console.error('Error in getLanguage:', error);
-	// 		console.error('Current state:', {
-	// 			selectedLanguage: lang,
-	// 			mapConfig: $mapConfig
-	// 		});
-	// 	}
-	// }
-
 	// Fixed filterAndReduceExtraInfo function
 	function filterAndReduceExtraInfo(data, filterTerm) {
 		const asArray = Object.entries(data);
@@ -345,10 +264,13 @@
 	}
 </script>
 
-<div class={isFullscreen ? 'h-screen w-full overflow-hidden' : 'h-screen w-1/2 overflow-hidden'}>
+<div
+	class={isFullscreen ? 'relative w-full overflow-hidden' : 'relative w-1/2 overflow-hidden'}
+	style="height: 100%;"
+>
 	<div
 		id="euranet-map"
-		class="h-full overflow-y-auto {isFullscreen ? 'p-0  pt-0' : 'p-32 pt-12'}"
+		class="relative {isFullscreen ? 'p-0' : 'p-32 pt-12'}"
 		bind:clientHeight={$APP_HEIGHT}
 		bind:clientWidth={innerWidth}
 	>
