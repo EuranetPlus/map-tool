@@ -469,9 +469,8 @@
 			preserveAspectRatio="xMidYMid meet"
 			viewBox="0 0 {width} {height}"
 			style="
-        max-height: calc(100vh - var(--text-height, 0px));
-        aspect-ratio: 1/1;
-        width: min(100%, calc(100vh - var(--text-height)));
+        height: min(calc(100vh - var(--text-height)), 100%);
+        width: 100%;
     "
 		>
 			<!-- graticules (lines) -->
