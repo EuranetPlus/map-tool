@@ -51,13 +51,42 @@
 		return element.offsetHeight + marginTop + marginBottom;
 	}
 
-	// Reactive statement to calculate total height whenever any component changes
 	$: if (headerRef && chartHeaderRef && sourceNotesRef) {
 		totalTextHeight =
 			getTotalHeight(headerRef) +
 			getTotalHeight(chartHeaderRef) +
 			getTotalHeight(sourceNotesRef) +
 			20; // Small safety buffer
+	}
+
+	$: if (headerRef && chartHeaderRef && sourceNotesRef) {
+		const headerTotal = getTotalHeight(headerRef);
+		const chartHeaderTotal = getTotalHeight(chartHeaderRef);
+		const sourceNotesTotal = getTotalHeight(sourceNotesRef);
+
+		console.log('Height breakdown:', {
+			header: {
+				height: headerRef.offsetHeight,
+				marginTop: parseInt(window.getComputedStyle(headerRef).marginTop),
+				marginBottom: parseInt(window.getComputedStyle(headerRef).marginBottom),
+				total: headerTotal
+			},
+			chartHeader: {
+				height: chartHeaderRef.offsetHeight,
+				marginTop: parseInt(window.getComputedStyle(chartHeaderRef).marginTop),
+				marginBottom: parseInt(window.getComputedStyle(chartHeaderRef).marginBottom),
+				total: chartHeaderTotal
+			},
+			sourceNotes: {
+				height: sourceNotesRef.offsetHeight,
+				marginTop: parseInt(window.getComputedStyle(sourceNotesRef).marginTop),
+				marginBottom: parseInt(window.getComputedStyle(sourceNotesRef).marginBottom),
+				total: sourceNotesTotal
+			},
+			totalHeight: headerTotal + chartHeaderTotal + sourceNotesTotal
+		});
+
+		totalTextHeight = headerTotal + chartHeaderTotal + sourceNotesTotal;
 	}
 
 	// Add this function to detect if we're in a deployed sub-app
